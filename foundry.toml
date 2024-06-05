@@ -10,6 +10,7 @@ fs_permissions = [{access = "write", path = "./reports"}]
 
 [rpc_endpoints]
 mainnet = "${RPC_MAINNET}"
+sepolia = "${RPC_SEPOLIA}"
 optimism = "${RPC_OPTIMISM}"
 avalanche = "${RPC_AVALANCHE}"
 polygon = "${RPC_POLYGON}"
@@ -25,6 +26,7 @@ scroll="${RPC_SCROLL}"
 
 [etherscan]
 mainnet = { key="${ETHERSCAN_API_KEY_MAINNET}", chain=1 }
+sepolia = { key="${ETHERSCAN_API_KEY_SEPOLIA}", chain=11155111 }
 optimism = { key="${ETHERSCAN_API_KEY_OPTIMISM}", chain=10 }
 avalanche = { key="${ETHERSCAN_API_KEY_AVALANCHE}", chain=43114 }
 polygon = { key="${ETHERSCAN_API_KEY_POLYGON}", chain=137 }

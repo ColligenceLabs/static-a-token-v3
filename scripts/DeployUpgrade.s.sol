@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {EthereumScript, PolygonScript, AvalancheScript, ArbitrumScript, OptimismScript, MetisScript, BaseScript, BNBScript, ScrollScript, BaseScript, GnosisScript} from 'aave-helpers/ScriptUtils.sol';
+import {EthereumScript, SepoliaScript, PolygonScript, AvalancheScript, ArbitrumScript, OptimismScript, MetisScript, BaseScript, BNBScript, ScrollScript, BaseScript, GnosisScript} from 'aave-helpers/ScriptUtils.sol';
 import {MiscEthereum} from 'aave-address-book/MiscEthereum.sol';
+import {MiscSepolia} from 'aave-address-book/MiscSepolia.sol';
 import {MiscPolygon} from 'aave-address-book/MiscPolygon.sol';
 import {MiscAvalanche} from 'aave-address-book/MiscAvalanche.sol';
 import {MiscArbitrum} from 'aave-address-book/MiscArbitrum.sol';
@@ -14,6 +15,7 @@ import {MiscScroll} from 'aave-address-book/MiscScroll.sol';
 import {MiscGnosis} from 'aave-address-book/MiscGnosis.sol';
 import {MiscBase} from 'aave-address-book/MiscBase.sol';
 import {AaveV3Ethereum, IPool} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV3Sepolia} from 'aave-address-book/AaveV3Sepolia.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {AaveV3Avalanche} from 'aave-address-book/AaveV3Avalanche.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
@@ -66,6 +68,17 @@ library DeployUpgrade {
         IRewardsController(AaveV3Ethereum.DEFAULT_INCENTIVES_CONTROLLER),
         AaveV3Ethereum.STATIC_A_TOKEN_FACTORY
       );
+  }
+
+  function deploySepolia() internal returns (UpgradePayload) {
+    return
+      _deploy(
+      ITransparentProxyFactory(MiscSepolia.TRANSPARENT_PROXY_FACTORY),
+      MiscSepolia.PROXY_ADMIN,
+      AaveV3Sepolia.POOL,
+      IRewardsController(AaveV3Sepolia.DEFAULT_INCENTIVES_CONTROLLER),
+      AaveV3Sepolia.STATIC_A_TOKEN_FACTORY
+    );
   }
 
   function deployPolygon() internal returns (UpgradePayload) {
@@ -172,6 +185,13 @@ library DeployUpgrade {
 contract DeployMainnet is EthereumScript {
   function run() external broadcast {
     DeployUpgrade.deployMainnet();
+  }
+}
+
+// make deploy-ledger contract=scripts/DeployUpgrade.s.sol:DeploySepolia chain=sepolia
+contract DeploySepolia is SepoliaScript {
+  function run() external broadcast {
+    DeployUpgrade.deploySepolia();
   }
 }
 

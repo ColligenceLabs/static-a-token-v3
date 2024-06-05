@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 
 import 'forge-std/Test.sol';
-import {EthereumScript, PolygonScript, AvalancheScript, ArbitrumScript, OptimismScript, MetisScript, BaseScript, BNBScript, ScrollScript} from 'aave-helpers/ScriptUtils.sol';
+import {EthereumScript, SepoliaScript, PolygonScript, AvalancheScript, ArbitrumScript, OptimismScript, MetisScript, BaseScript, BNBScript, ScrollScript} from 'aave-helpers/ScriptUtils.sol';
 import {MiscEthereum} from 'aave-address-book/MiscEthereum.sol';
+import {MiscSepolia} from 'aave-address-book/MiscSepolia.sol';
 import {MiscPolygon} from 'aave-address-book/MiscPolygon.sol';
 import {MiscAvalanche} from 'aave-address-book/MiscAvalanche.sol';
 import {MiscArbitrum} from 'aave-address-book/MiscArbitrum.sol';
@@ -13,6 +14,7 @@ import {MiscBase} from 'aave-address-book/MiscBase.sol';
 import {MiscBNB} from 'aave-address-book/MiscBNB.sol';
 import {MiscScroll} from 'aave-address-book/MiscScroll.sol';
 import {AaveV3Ethereum, IPool} from 'aave-address-book/AaveV3Ethereum.sol';
+import {AaveV3Sepolia} from 'aave-address-book/AaveV3Sepolia.sol';
 import {AaveV3Polygon} from 'aave-address-book/AaveV3Polygon.sol';
 import {AaveV3Avalanche} from 'aave-address-book/AaveV3Avalanche.sol';
 import {AaveV3Optimism} from 'aave-address-book/AaveV3Optimism.sol';
@@ -64,6 +66,17 @@ contract DeployMainnet is EthereumScript {
       MiscEthereum.PROXY_ADMIN,
       AaveV3Ethereum.POOL,
       IRewardsController(AaveV3Ethereum.DEFAULT_INCENTIVES_CONTROLLER)
+    );
+  }
+}
+
+contract DeploySepolia is SepoliaScript {
+  function run() external broadcast {
+    DeployATokenFactory._deploy(
+      ITransparentProxyFactory(MiscSepolia.TRANSPARENT_PROXY_FACTORY),
+      MiscSepolia.PROXY_ADMIN,
+      AaveV3Sepolia.POOL,
+      IRewardsController(AaveV3Sepolia.DEFAULT_INCENTIVES_CONTROLLER)
     );
   }
 }
